@@ -15,7 +15,6 @@ model = genai.GenerativeModel("gemini-1.5-flash",
                               )
 
 
-# Function to query Gemini API
 async def query_gemini(question):
     try:
         response = model.generate_content(question)
@@ -23,7 +22,6 @@ async def query_gemini(question):
     except Exception as e:
         return f"Error: Could not connect to Gemini API - {str(e)}"
 
-# Telegram bot handlers
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("Hi! I'm your Computer Science Q&A bot powered by Gemini. Ask me any CS question!")
 
@@ -32,7 +30,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     response = await query_gemini(user_message)
     await update.message.reply_text(response)
 
-# Main function to run the bot
 def main():
     app = Application.builder().token(TELE_TOKEN_KEY).build()
     app.add_handler(CommandHandler("start", start))
